@@ -1,0 +1,185 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    pdftitle={Assignment 3 - Supply Chain Management DApp},
+    pdfauthor={MuhammadSaad}
+}
+
+\setstretch{1.2}
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+
+\title{Assignment 3 Report\\Supply Chain Management DApp}
+\author{MuhammadSaad}
+\date{April 19, 2026}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\section{Assignment Objective}
+Develop a decentralized application (DApp) for Supply Chain Management that ensures transparency, traceability, and tamper-proof recording of product movement from Manufacturer to Distributor to Retailer to Customer.
+
+The assignment allows deployment on Polygon Mumbai or any other testnet. This implementation uses \textbf{Ethereum Sepolia Testnet}.
+
+\section{Task Description (As Required in Assignment 3)}
+A blockchain-based supply chain solution was designed and implemented to track products across all stages of movement:
+\begin{itemize}[leftmargin=*]
+    \item Manufacturer $\rightarrow$ Distributor $\rightarrow$ Retailer $\rightarrow$ Customer
+    \item Every stage is represented by an on-chain smart contract transaction
+    \item Product state and ownership are queryable through an auditor interface
+\end{itemize}
+
+\section{Core Requirements and Implementation}
+
+\subsection{1. Smart Contract Development (Solidity)}
+Implemented according to assignment requirements:
+\begin{itemize}[leftmargin=*]
+    \item Contract naming style includes student name: \texttt{MuhammadSaad\_supplychain.sol}
+    \item GUI displays \textbf{MuhammadSaad} on sections/pages
+    \item Roles implemented: Manufacturer, Distributor, Retailer, Customer
+    \item Product fields implemented:
+    \begin{itemize}[leftmargin=*]
+        \item Product ID
+        \item Name
+        \item Description
+        \item Current Owner
+        \item Status (Manufactured, InTransit, Delivered)
+    \end{itemize}
+    \item Required functions implemented:
+    \begin{itemize}[leftmargin=*]
+        \item Register new products (Manufacturer only)
+        \item Transfer product ownership between roles
+        \item View product history (audit trail)
+    \end{itemize}
+\end{itemize}
+
+\subsection{2. Deployment (Hardhat)}
+Hardhat was used for:
+\begin{itemize}[leftmargin=*]
+    \item Smart contract compilation
+    \item Deployment to testnet (Sepolia)
+    \item Contract verification on explorer
+\end{itemize}
+
+\subsection{3. Frontend}
+A React + Ethers.js frontend was implemented with:
+\begin{itemize}[leftmargin=*]
+    \item Connect Wallet functionality
+    \item Manufacturer form to register product
+    \item Owner/Transferee operations for transfer and status update
+    \item Auditor search by Product ID for full movement history
+\end{itemize}
+
+\section{Environment and Configuration}
+\begin{itemize}[leftmargin=*]
+    \item Blockchain Network: Ethereum Sepolia
+    \item Chain ID: 11155111
+    \item Contract Address: \texttt{0x231b52e49c3Da623164A7b1f036b8CA587cF144b}
+    \item Deployment Tx Hash: \texttt{0xbc2b16041fffbe59492c1dcaaae0f143767eb3cd3c4683c820153bd7cea5373a}
+    \item Verified Code URL: \url{https://sepolia.etherscan.io/address/0x231b52e49c3Da623164A7b1f036b8CA587cF144b#code}
+\end{itemize}
+
+\section{Steps Performed from Compilation to Deployment}
+\begin{enumerate}[leftmargin=*]
+    \item Configure environment variables in \texttt{hardhat/.env}:
+    \begin{itemize}[leftmargin=*]
+        \item \texttt{SEPOLIA\_RPC\_URL}
+        \item \texttt{PRIVATE\_KEY}
+        \item \texttt{ETHERSCAN\_API\_KEY}
+    \end{itemize}
+    \item Compile smart contract:
+    \begin{itemize}[leftmargin=*]
+        \item \texttt{npm run compile}
+    \end{itemize}
+    \item Deploy contract to Sepolia:
+    \begin{itemize}[leftmargin=*]
+        \item \texttt{npm run deploy:sepolia}
+    \end{itemize}
+    \item Verify contract source on Etherscan:
+    \begin{itemize}[leftmargin=*]
+        \item \texttt{npm run verify:sepolia <CONTRACT\_ADDRESS>}
+    \end{itemize}
+    \item Configure frontend contract address in \texttt{frontend/.env}:
+    \begin{itemize}[leftmargin=*]
+        \item \texttt{VITE\_CONTRACT\_ADDRESS=0x231b52e49c3Da623164A7b1f036b8CA587cF144b}
+    \end{itemize}
+    \item Run frontend:
+    \begin{itemize}[leftmargin=*]
+        \item \texttt{npm run dev}
+    \end{itemize}
+    \item Connect MetaMask on Sepolia and perform test transactions.
+\end{enumerate}
+
+\section{Working of the System}
+\begin{enumerate}[leftmargin=*]
+    \item Manufacturer registers product with details and initial status \texttt{Manufactured}.
+    \item System stores owner and status on-chain.
+    \item Owner updates status (for example, \texttt{InTransit}) and transfers to next role.
+    \item Every ownership change is appended to product history.
+    \item Auditor enters Product ID and fetches current owner, status, and movement history.
+\end{enumerate}
+
+\section{Deliverables}
+\begin{itemize}[leftmargin=*]
+    \item Smart contract source code (.sol)
+    \item Deployment address and transaction hash on testnet
+    \item Frontend interface files
+    \item This report with implementation steps and snapshots
+\end{itemize}
+
+\newpage
+\section{Snapshots (Placed at End in Order)}
+
+\subsection*{Figure 1: DApp Home and Wallet Connected}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{\detokenize{Screenshot (43).png}}
+\end{figure}
+
+\subsection*{Figure 2: Register Product Transaction Request (MetaMask)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{\detokenize{Screenshot (44).png}}
+\end{figure}
+
+\subsection*{Figure 3: Transaction Confirmation in MetaMask}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{\detokenize{Screenshot (45).png}}
+\end{figure}
+
+\subsection*{Figure 4: Auditor View After Registration (Manufactured)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{\detokenize{Screenshot (46).png}}
+\end{figure}
+
+\subsection*{Figure 5: Transfer/Status Transaction Request}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{\detokenize{Screenshot (47).png}}
+\end{figure}
+
+\subsection*{Figure 6: Auditor View After Status Update (InTransit)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{\detokenize{Screenshot (48).png}}
+\end{figure}
+
+\end{document}
